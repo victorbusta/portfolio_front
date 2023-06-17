@@ -15,7 +15,7 @@
   </div>
 </template>
 
-<style>
+<style scoped>
 svg {
   width: 32px;
   height: 32px;
@@ -29,11 +29,11 @@ svg {
 #over {
   fill: var(--color-text);
   z-index: 1;
-  animation: unpress 200ms ease-in-out forwards;
+  animation: press 200ms ease-in-out forwards;
 }
 
 #over:hover {
-  animation: press 200ms ease-in-out forwards;
+  animation: unpress 200ms ease-in-out forwards;
 }
 
 @keyframes unpress {

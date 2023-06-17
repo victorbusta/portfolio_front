@@ -23,7 +23,8 @@ watch(() => lang.value, () => {
     <h1>{{ title }}</h1>
     <div>
       <a class="iconlink" href="https://github.com/victorbusta" target="_blank"><GithubIcon/></a>
-      <a class="iconlink" href="https://github.com/victorbusta" target="_blank"><LinkedIcon/></a>
+      <a class="iconlink" href="https://www.linkedin.com/in/victor-busta/" target="_blank"><LinkedIcon/></a>
+      <a class="iconlink" href="mailto:victor.sdbustamante@gmail.com?subject=Prise de contact" target="_blank"><MailIcon/></a>
     </div>
 </main>
 </template>
