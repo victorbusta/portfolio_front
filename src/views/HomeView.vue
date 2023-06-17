@@ -3,6 +3,7 @@ import Logo from '@/components/LogoIcon.vue';
 import GithubIcon from '@/components/icons/GithubIcon.vue';
 import LinkedIcon from '@/components/icons/LinkedIcon.vue';
 import MailIcon from '@/components/icons/MailIcon.vue';
+import ResumeIcon from '@/components/icons/ResumeIcon.vue';
 import { inject, watch, toRef, ref } from 'vue';
 
 const eng = "Fullstack developper";
@@ -25,6 +26,7 @@ watch(() => lang.value, () => {
       <a class="iconlink" href="https://github.com/victorbusta" target="_blank"><GithubIcon/></a>
       <a class="iconlink" href="https://www.linkedin.com/in/victor-busta/" target="_blank"><LinkedIcon/></a>
       <a class="iconlink" href="mailto:victor.sdbustamante@gmail.com?subject=Prise de contact" target="_blank"><MailIcon/></a>
+      <a class="iconlink" href="./cv-VictorSantos.pdf" target="_blank"><ResumeIcon/></a>
     </div>
 </main>
 </template>
@@ -41,7 +43,6 @@ main {
 
 h1 {
   width: 100%;
-  /* text-align: center; */
   font-size: 3vw;
   font-weight: bolder;
   color: var(--color-heading);

@@ -49,12 +49,23 @@ provide('lang', lang);
         </nav>
       </div>
 
+      <footer>
+        Made with Vue3
+      </footer>
     </section>
   </article>
-
 </template>
 
 <style scoped>
+
+footer {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 10px;
+  color: var(--color-heading);
+}
+
 header {
   position: fixed;
   right: 0%;
@@ -94,11 +105,11 @@ main {
 article {
   height: 100vh;
   overflow-y: scroll;
-  scroll-snap-type: y mandatory;
+  /* scroll-snap-type: y mandatory; */
 }
 
 article section {
-  scroll-snap-align: start;
+  /* scroll-snap-align: start; */
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -157,14 +168,14 @@ a:not(.router-link-active) > h1 {
 }
 
 @media (max-width: 768px) {
-  h1 {
-    font-size: 4.5vw;
+  h1.link {
+    font-size: 5vw;
   }
 
   @keyframes linkhover {
     100% {
-      transform: translate(.45vw, -.45vw);
-      filter: drop-shadow(.45vw .45vw .45vw rgba(0, 0, 0, 0.5));
+      transform: translate(.5vw, -.5vw);
+      filter: drop-shadow(.4=5vw .5vw .5vw rgba(0, 0, 0, 0.5));
     }
   }
 }
