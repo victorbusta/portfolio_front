@@ -96,7 +96,7 @@ onMounted(() => {
 
 <style scoped>
 article {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
   -ms-overflow-style: none;
   scrollbar-width: none;
   min-height: 100vh;
