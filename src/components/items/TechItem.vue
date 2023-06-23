@@ -82,6 +82,9 @@ import ChevronIcon from '@/components/icons/ChevronIcon.vue';
   }
 
   .wrap {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     margin: 8px 0;
     background-color: var(--color-heading);
     transition: all 200ms ease-in-out;
