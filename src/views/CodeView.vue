@@ -67,6 +67,10 @@ a {
   font-weight: bolder;
 }
 
+a:hover {
+  background-color: var(--color-hover);
+}
+
 .about:not(:last-child) {
   margin-bottom: 16px;
 }

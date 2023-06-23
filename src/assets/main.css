@@ -15,7 +15,7 @@ a {
 }
 
 @media (hover: hover) {
-  a:hover {
+  /* a:hover {
     background-color: var(--color-hover);
-  }
+  } */
 }
