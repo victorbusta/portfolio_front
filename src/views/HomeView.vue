@@ -4,6 +4,7 @@ import GithubIcon from '@/components/icons/roundicons/GithubIcon.vue';
 import LinkedIcon from '@/components/icons/roundicons/LinkedIcon.vue';
 import MailIcon from '@/components/icons/roundicons/MailIcon.vue';
 import ResumeIcon from '@/components/icons/roundicons/ResumeIcon.vue';
+import MaltIcon from '@/components/icons/roundicons/MaltIcon.vue';
 import { inject, watch, toRef, ref } from 'vue';
 
 const eng = "Fullstack developper";
@@ -25,6 +26,7 @@ watch(() => lang.value, () => {
     <div>
       <a class="iconlink" href="https://github.com/victorbusta" target="_blank"><GithubIcon/></a>
       <a class="iconlink" href="https://www.linkedin.com/in/victor-busta/" target="_blank"><LinkedIcon/></a>
+      <a class="iconlink" href="https://www.malt.fr/profile/victorsantosdebustamante" target="_blank"><MaltIcon/></a>
       <a class="iconlink" href="mailto:victor.sdbustamante@gmail.com?subject=Prise de contact" target="_blank"><MailIcon/></a>
       <a class="iconlink" href="./cv-VictorSantos.pdf" target="_blank"><ResumeIcon/></a>
     </div>
