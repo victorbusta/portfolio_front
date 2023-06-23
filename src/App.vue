@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { ref, provide } from 'vue';
-import { RouterLink, RouterView } from 'vue-router';
+import { ref, provide, onMounted } from 'vue';
 import LangIcon from '@/components/icons/LangIcon.vue';
+import NavItem from './components/items/NavItem.vue';
+import HomeView from './views/HomeView.vue';
+import AboutView from './views/AboutView.vue';
+import CodeView from './views/CodeView.vue';
 
 const unactiveLang = ref(window.navigator.language === 'fr-FR' ? 'eng' : 'fr');
 const lang = ref(window.navigator.language !== 'fr-FR' ? 'eng' : 'fr');
@@ -12,67 +15,129 @@ const switchLang = () => {
 }
 
 provide('lang', lang);
+
+const navItems = [
+  { label: 'VSC .', to: '#home', isActive: ref(false) },
+  { label: 'ABOUT', to: '#about', isActive: ref(false) },
+  { label: 'CODE', to: '#project', isActive: ref(false) }
+];
+
+const handleSectionIntersection = (entries: IntersectionObserverEntry[]) => {
+  entries.forEach(entry => {
+    const sectionId = entry.target.id;
+    const navItem = navItems.find(item => item.to === `#${sectionId}`);
+
+    if (navItem) {
+      navItem.isActive.value = entry.isIntersecting;
+      if (entry.isIntersecting) {
+        window.location.hash = navItem.to;  // updates the URL hash when isActive is true
+      }
+    }
+  });
+};
+
+onMounted(() => {
+  const sections = document.querySelectorAll("section");
+  const options = {
+    root: null, // Use the viewport as the root
+    rootMargin: "0px",
+    threshold: 0.5 // When at least 50% of the section is visible
+  };
+
+  const observer = new IntersectionObserver(handleSectionIntersection, options);
+
+  sections.forEach(section => observer.observe(section));
+});
+
 </script>
 
 <template>
+
+  <div class="langSwitch" @click="switchLang">
+    <span>
+      <h1 >
+        {{ lang }}
+      </h1>
+      <h1 class="unactive">
+        {{ unactiveLang }}
+      </h1>
+    </span>
+
+    <LangIcon height="56px"/>
+  </div>
+
+  <nav>
+    <NavItem
+        v-for="navItem in navItems"
+        :key="navItem.to"
+        :label="navItem.label"
+        :to="navItem.to"
+        :class="`${navItem.isActive.value ? 'active' : ''}`"
+      />
+  </nav>
+
   <article>
-    <header>
-      <div class="langSwitch" @click="switchLang">
-        <span>
-          <h1 >
-            {{ lang }}
-          </h1>
-          <h1 class="unactive">
-            {{ unactiveLang }}
-          </h1>
-        </span>
-
-        <LangIcon height="56px"/>
-      </div>
-    </header>
-
-    <section id="head">
-      <div class="verticalflex">
-        <main>
-          <RouterView />
-        </main>
-
-        <nav>
-          <div>
-            <RouterLink to="/"><h1 class="link">VSC .</h1></RouterLink>
-            <h1 class="link">VSC .</h1>
-          </div>
-          <div>
-            <RouterLink to="/about"><h1 class="link">ABOUT</h1></RouterLink>
-            <h1 class="link">ABOUT</h1>
-          </div>
-        </nav>
-      </div>
-
-      <footer>
-        Made with Vue3
-      </footer>
+    <section id="home">
+      <HomeView/>
+    </section>
+    <section id="about">
+      <AboutView/>
+    </section>
+    <section id="project">
+      <CodeView/>
     </section>
   </article>
+
+  <footer>
+      Made with Vue3
+  </footer>
+
 </template>
 
 <style scoped>
-
-footer {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  font-size: 10px;
-  color: var(--color-heading);
+article {
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  min-height: 100vh;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-row: auto;
+  transform: translateX(-100%);
+  animation: intro 200ms ease-in-out 100ms forwards;
+  scroll-behavior: smooth;
 }
 
-header {
+article::-webkit-scrollbar {
+  display: none;
+}
+
+section {
+  grid-column-start: 1;
+  scroll-snap-align: start;
+  width: 75vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: fit-content;
+}
+
+footer {
   position: fixed;
-  right: 0%;
+  bottom: 0;
+  right: 8px;
+  font-size: 10px;
+  color: var(--color-heading);
+  z-index: 1;
 }
 
 .langSwitch {
+  position: fixed;
+  right: 0%;
   display: flex;
+  z-index: 2;
 }
 
 .langSwitch > span > h1{
@@ -86,97 +151,38 @@ header {
   font-size: 24px;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 8px;
-  width: 80vw;
-  transform: translateX(-100%);
-  animation: intro 200ms ease-in-out 100ms forwards;
-}
-
 @keyframes intro {
   100%{
     transform: translateX(0);
   }
 }
 
-article {
-  height: 100vh;
-  overflow-y: scroll;
-  /* scroll-snap-type: y mandatory; */
-}
-
-article section {
-  /* scroll-snap-align: start; */
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-div.verticalflex {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 nav {
   position: fixed;
   right: 0px;
-  height: 30vh;
+  top: 0px;
+  height: 100vh;
   width: 20vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform: translateY(-100vh);
+  transform: translateX(100%);
   animation: navanim 200ms ease-in 100ms forwards;
+  z-index: 1;
+  /* background: linear-gradient(270deg, var(--color-background) 50%, rgba(255, 255, 255, 0) 100%); */
 }
 
 @keyframes navanim {
   100%{
-    transform: translateY(6vh);
+    transform: translateX(0);
   }
-}
-
-nav > div > a {
-  position: absolute;
-  z-index: 1;
-}
-
-nav > div > a:hover:not(.router-link-active) {
-  animation: linkhover 100ms ease-in forwards;
-}
-
-@keyframes linkhover {
-  100% {
-    transform: translate(.25vw, -.25vw);
-    filter: drop-shadow(.25vw .25vw .25vw rgba(0, 0, 0, 0.5));
-  }
-}
-
-h1.link {
-  font-size: 2.5vw;
-  color: var(--color-heading);
-  font-weight: bolder;
-  width: fit-content;
-}
-
-a:not(.router-link-active) > h1 {
-  color: var(--color-text);
 }
 
 @media (max-width: 768px) {
-  h1.link {
-    font-size: 5vw;
-  }
-
-  @keyframes linkhover {
-    100% {
-      transform: translate(.5vw, -.5vw);
-      filter: drop-shadow(.4=5vw .5vw .5vw rgba(0, 0, 0, 0.5));
+  /* @keyframes navanim {
+    100%{
+      transform: translateY(75vh);
     }
-  }
+  } */
 }
 </style>

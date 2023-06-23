@@ -16,6 +16,6 @@ a {
 
 @media (hover: hover) {
   a:hover {
-    /* background-color: var(--color-hover); */
+    background-color: var(--color-hover);
   }
 }

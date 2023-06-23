@@ -19,6 +19,11 @@ svg {
   height: 32px;
 }
 
+.back {
+  /* fill: var(--color-background); */
+  fill: none;
+}
+
 #under {
   fill: var(--color-heading);
   position: absolute;
@@ -27,27 +32,11 @@ svg {
 #over {
   fill: var(--color-text);
   z-index: 1;
-  animation: press 200ms ease-in-out forwards;
+  transition: all 200ms ease-in-out;
 }
 
-#over:hover {
-  animation: unpress 200ms ease-in-out forwards;
-}
-
-@keyframes unpress {
-  100%{
-    transform: translate(2px, -2px);
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
-  }
-}
-
-@keyframes press {
-  0%{
-    transform: translate(2px, -2px);
-    filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
-  }
-  100%{
-    transform: translate(0);
-  }
+div:hover > #over {
+  transform: translate(4px, -4px);
+    filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.5));
 }
 </style>

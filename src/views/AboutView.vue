@@ -1,41 +1,63 @@
-<script setup lang="ts">import { inject, ref, toRef, watch } from 'vue';
+<script setup lang="ts">
+import { inject, ref } from 'vue';
+import TechItem from '@/components/items/TechItem.vue';
 
-const eng = "Looking for a skilled problem-solving developer? With recognized expertise in decoding technical challenges, I turn complexities into elegant and efficient solutions. My ability to navigate through code and find optimized solutions will provide you with undeniable value. My talent for quickly understanding needs and adapting my skills allows me to deliver tailor-made solutions. No matter the technological challenge, I am ready to take it on.";
-const fr = "Recherchez-vous un développeur habile en résolution de problèmes ? Avec une expertise reconnue dans le décodage des défis techniques, je transforme les complexités en solutions élégantes et efficaces. Ma capacité à naviguer dans le code et à trouver des solutions optimisées vous fournira une valeur indéniable. Mon talent pour comprendre rapidement les besoins et adapter mes compétences me permet d'offrir des solutions sur mesure. Peu importe le défi technologique, je suis prêt à le relever.";
-
-const lang = toRef(inject('lang'));
-const text = ref(lang.value === 'fr' ? fr : eng);
-
-watch(() => lang.value, () => {
-  text.value = lang.value === 'fr' ? fr : eng;
-});
+const lang = ref(inject('lang'));
 </script>
 
 <template>
   <main>
-    <div class="about">
-      <p>
-        {{ text }}
-      </p>
-    </div>
+    <p v-if="lang === 'fr'">
+    Salut !<br>
+    Je suis <span>Victor Santos</span>, un développeur français passionné résident à Paris.<br>
+    En quête de perfection, je cherche toujours à améliorer et partager mes compétences.
+  </p>
+  <p v-else>
+    Hello there !<br>
+    I am <span>Victor Santos</span>, a passionate french developer based in Paris.<br>
+    Striving for perfection, I'm always looking for ways to improve and share my knowledge.
+  </p>
+
+  <TechItem/>
   </main>
+
 </template>
 
 <style scoped>
-.about {
-  width: 100%;
+main {
+  margin: 0 10vw;
+  height: fit-content;
   padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 p {
-  text-align: justify;
+  /* text-align: justify; */
   color: var(--color-heading);
-  font-size: 2vw;
+  font-size: 1.5rem;
+  font-weight: bolder;
+  /* white-space: pre-wrap; */
+}
+
+p > span {
+  font-weight: bolder;
+  color: var(--color-text);
 }
 
 @media (max-width: 768px) {
+  main {
+    margin: 0;
+  }
+
   p {
-    font-size: 4vw;
+    font-size: 1rem;
   }
 }
 </style>

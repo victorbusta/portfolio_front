@@ -13,8 +13,8 @@
   --color-background: var(--vt-c-white);
   --color-background-bis: var(--vt-c-white-bis);
 
-  --color-heading: var(--vt-c-black);
-  --color-text: var(--vt-c-black-bis);
+  --color-heading: var(--vt-c-black-bis);
+  --color-text: var(--vt-c-black);
   --color-hover: var(--vt-c-black-soft);
 }
 
@@ -49,4 +49,12 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }

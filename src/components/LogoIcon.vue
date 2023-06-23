@@ -50,20 +50,18 @@ span.head {
 span.over > h1 {
   color: var(--color-text);
   z-index: 1;
+  transition: all 200ms ease-in-out;
+}
+
+span.over > h1:hover {
+  transform: translate(.7vw, -.7vw);
+  filter: drop-shadow(.7vw .7vw .7vw rgba(0, 0, 0, 0.5));
 }
 
 @for $i from 1 through 13 {
   span.first > h1:nth-child(n + #{$i}) {
-    animation: press-reverse 200ms ease-in-out calc(200ms + #{$i}00ms) forwards;
+    animation: press-reverse 200ms ease-in-out calc(200ms + #{$i}00ms);
   }
-}
-
-span.second > h1 {
-    animation: press 200ms ease-in-out forwards;
-}
-
-span.second > h1:hover {
-    animation: press-reverse-bis 200ms ease-in-out forwards;
 }
 
 @keyframes press-reverse {
@@ -78,24 +76,6 @@ span.second > h1:hover {
   100% {
     transform: translate(0);
     filter: drop-shadow(0px 0px 0px rgba(0, 0, 0, 0.5));
-  }
-}
-
-@keyframes press-reverse-bis {
-  100% {
-    transform: translate(.7vw, -.7vw);
-    filter: drop-shadow(.7vw .7vw .7vw rgba(0, 0, 0, 0.5));
-  }
-}
-
-@keyframes press {
-  0% {
-    transform: translate(.7vw, -.7vw);
-    filter: drop-shadow(.7vw .7vw .7vw rgba(0, 0, 0, 0.5));
-  }
-  100% {
-    transform: translate(0);
-    filter: drop-shadow(0vw 0vw 0vw rgba(0, 0, 0, 0.5));
   }
 }
 </style>

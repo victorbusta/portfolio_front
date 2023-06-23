@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Logo from '@/components/LogoIcon.vue';
-import GithubIcon from '@/components/icons/GithubIcon.vue';
-import LinkedIcon from '@/components/icons/LinkedIcon.vue';
-import MailIcon from '@/components/icons/MailIcon.vue';
-import ResumeIcon from '@/components/icons/ResumeIcon.vue';
+import GithubIcon from '@/components/icons/roundicons/GithubIcon.vue';
+import LinkedIcon from '@/components/icons/roundicons/LinkedIcon.vue';
+import MailIcon from '@/components/icons/roundicons/MailIcon.vue';
+import ResumeIcon from '@/components/icons/roundicons/ResumeIcon.vue';
 import { inject, watch, toRef, ref } from 'vue';
 
 const eng = "Fullstack developper";
@@ -28,17 +28,16 @@ watch(() => lang.value, () => {
       <a class="iconlink" href="mailto:victor.sdbustamante@gmail.com?subject=Prise de contact" target="_blank"><MailIcon/></a>
       <a class="iconlink" href="./cv-VictorSantos.pdf" target="_blank"><ResumeIcon/></a>
     </div>
-</main>
+  </main>
 </template>
 
 <style scoped>
-#logo {
-  width: 100%;
+main {
+  padding: 8px;
 }
 
-main {
-  display: flex;
-  flex-direction: column;
+#logo {
+  width: 100%;
 }
 
 h1 {
