@@ -51,7 +51,7 @@ const handleSectionIntersection = (entries: IntersectionObserverEntry[]) => {
     if (navItem) {
       if (entry.isIntersecting) {
         navItem.isActive.value = true;
-        window.history.replaceState({}, '', navItem.to); // Update URL hash without scrolling
+        // window.history.replaceState({}, '', navItem.to); // Update URL hash without scrolling
       } else {
         navItem.isActive.value = false;
       }
