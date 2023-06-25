@@ -49,9 +49,11 @@ const handleSectionIntersection = (entries: IntersectionObserverEntry[]) => {
     const navItem = navItems.find(item => item.to === `#${sectionId}`);
 
     if (navItem) {
-      navItem.isActive.value = entry.isIntersecting;
       if (entry.isIntersecting) {
-        window.location.hash = navItem.to;  // updates the URL hash when isActive is true
+        navItem.isActive.value = true;
+        window.history.replaceState({}, '', navItem.to); // Update URL hash without scrolling
+      } else {
+        navItem.isActive.value = false;
       }
     }
   });
@@ -154,9 +156,8 @@ article {
   scrollbar-width: none;
   min-height: 100vh;
   width: 100%;
-  display: grid;
-  grid-template-columns: 100%;
-  grid-row: auto;
+  display: flex;
+  flex-direction: column;
   transform: translateX(-100%);
   animation: intro 200ms ease-in-out 100ms forwards;
   scroll-behavior: smooth;
@@ -251,7 +252,9 @@ nav {
   nav {
     transform: translateX(100%);
     background-color: var(--color-background-bis);
-    padding-left: 4px;
+    width: 50vw;
+    align-items: center;
+    
   }
 
   #project {
