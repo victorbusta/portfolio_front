@@ -8,8 +8,8 @@ const lang = ref(inject('lang'));
 <template>
   <main>
     <p v-if="lang === 'fr'">
-    Salut !<br>
-    Je suis <span>Victor Santos</span>, un développeur français passionné résident à Paris.<br>
+    Bonjour !<br>
+    Je m'appelle <span>Victor Santos</span>, un développeur français passionné résident à Paris.<br>
     En quête de perfection, je cherche toujours à améliorer et partager mes compétences.
   </p>
   <p v-else>

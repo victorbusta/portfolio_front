@@ -113,6 +113,7 @@ a:hover {
 
 h1 {
   font-weight: bolder;
+  border-radius: 8px;
 }
 
 li {

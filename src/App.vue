@@ -1,10 +1,31 @@
 <script setup lang="ts">
-import { ref, provide, onMounted } from 'vue';
+import { ref, provide, onMounted, watch } from 'vue';
 import LangIcon from '@/components/icons/LangIcon.vue';
 import NavItem from './components/items/NavItem.vue';
 import HomeView from './views/HomeView.vue';
 import AboutView from './views/AboutView.vue';
 import CodeView from './views/CodeView.vue';
+import * as anim from '@/utils.animation';
+
+const scrollIndicatorWidth = ref(0);
+const scrollIndicatorStyle = ref('');
+
+const handleScroll = () => {
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  const scrollHeight =
+    document.documentElement.scrollHeight -
+    document.documentElement.clientHeight;
+  const progress = (scrollTop / scrollHeight) * 100;
+  scrollIndicatorWidth.value = progress;
+};
+
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll);
+});
+
+watch(scrollIndicatorWidth, () => {
+  scrollIndicatorStyle.value = `width: ${scrollIndicatorWidth.value}%`;
+});
 
 const unactiveLang = ref(window.navigator.language === 'fr-FR' ? 'eng' : 'fr');
 const lang = ref(window.navigator.language !== 'fr-FR' ? 'eng' : 'fr');
@@ -49,9 +70,25 @@ onMounted(() => {
   sections.forEach(section => observer.observe(section));
 });
 
+let navOpen = false;
+
+const toggleNav = () => {
+  if (window.innerWidth <= 425) {
+    anim.translateX('nav', navOpen ? '100%' : '0', 100);
+    navOpen = !navOpen;
+    if (!navOpen) {
+      document.querySelector('#burger')?.classList.remove("opened");
+    } else {
+      document.querySelector('#burger')?.classList.add("opened");
+    }
+  }
+}
+
 </script>
 
 <template>
+
+  <div class="scroll-indicator" :style="scrollIndicatorStyle"></div>
 
   <div class="langSwitch" @click="switchLang">
     <span>
@@ -73,6 +110,7 @@ onMounted(() => {
         :label="navItem.label"
         :to="navItem.to"
         :class="`${navItem.isActive.value ? 'active' : ''}`"
+        @click="toggleNav"
       />
   </nav>
 
@@ -89,14 +127,29 @@ onMounted(() => {
   </article>
 
   <footer>
+    <div id="burger" @click="toggleNav">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
       Made with Vue3
   </footer>
 
 </template>
 
 <style scoped>
+.scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  width: 0;
+  background-color: var(--color-background-bis); /* Choose the desired background color */
+  z-index: 2;
+  transform-origin: left;
+}
+
 article {
-  /* overflow-y: scroll; */
   -ms-overflow-style: none;
   scrollbar-width: none;
   min-height: 100vh;
@@ -115,7 +168,6 @@ article::-webkit-scrollbar {
 
 section {
   grid-column-start: 1;
-  scroll-snap-align: start;
   width: 75vw;
   min-height: 100vh;
   display: flex;
@@ -127,10 +179,14 @@ section {
 footer {
   position: fixed;
   bottom: 0;
-  right: 8px;
+  right: 0;
+  padding-right: 8px;
   font-size: 10px;
   color: var(--color-heading);
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
 }
 
 .langSwitch {
@@ -138,6 +194,10 @@ footer {
   right: 0%;
   display: flex;
   z-index: 2;
+}
+
+.langSwitch > span {
+  height: 64px;
 }
 
 .langSwitch > span > h1{
@@ -166,10 +226,7 @@ nav {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  transform: translateX(100%);
-  animation: navanim 200ms ease-in 100ms forwards;
   z-index: 1;
-  /* background: linear-gradient(270deg, var(--color-background) 50%, rgba(255, 255, 255, 0) 100%); */
 }
 
 @keyframes navanim {
@@ -178,11 +235,68 @@ nav {
   }
 }
 
-@media (max-width: 768px) {
-  /* @keyframes navanim {
-    100%{
-      transform: translateY(75vh);
-    }
-  } */
+@media (max-width: 425px) {
+
+  .langSwitch {
+    background-color: var(--color-background-bis-soft);
+    padding-left: 8px;
+    border-radius: 0 0 0 8px;
+
+  }
+
+  section {
+    width: 100vw;
+  }
+
+  nav {
+    transform: translateX(100%);
+    background-color: var(--color-background-bis);
+    padding-left: 4px;
+  }
+
+  #project {
+    margin-bottom: 32px;
+  }
+
+  #burger {
+    height: 48px;
+    width: 48px;
+    background-color: var(--color-background-bis-soft);
+    padding: 4px;
+    margin-bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  #burger > div {
+    position: absolute;
+    height: 4px;
+    width: 40px;
+    background-color: var(--color-text);
+    border-radius: 4px;
+    transition: all 200ms ease-in-out;
+  }
+
+  #burger:not(.opened) > div:first-child {
+    transform: translateY(12px);
+  }
+
+  #burger:not(.opened) > div:last-child {
+    transform: translateY(-12px);
+  }
+
+  .opened > div:first-child {
+    transform: rotate(45deg);
+  }
+
+  .opened > div:last-child {
+    transform: rotate(-45deg);
+  }
+
+  .opened > div:nth-child(2) {
+    opacity: 0;
+  }
 }
 </style>

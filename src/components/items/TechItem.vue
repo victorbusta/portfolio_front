@@ -3,11 +3,22 @@ import FrontIcon from '@/components/icons/abouticons/FrontIcon.vue';
 import BackIcon from '@/components/icons/abouticons/BackIcon.vue';
 import CloudIcon from '@/components/icons/abouticons/CloudIcon.vue';
 import ChevronIcon from '@/components/icons/ChevronIcon.vue';
+
+const openDrawer = (e: Event) => {
+  const clicked = e.currentTarget as HTMLElement;
+  document.querySelectorAll(".wrap").forEach((element) => {if(element !== clicked) element.classList.remove("show")});
+
+  if (clicked.classList.contains("show")) {
+    clicked.classList.remove("show");
+  } else {
+    clicked.classList.add("show");
+  }
+}
 </script>
 
 <template>
 
-  <div class="wrap">
+  <div class="wrap" @click="openDrawer">
 
     <div class="over">
       <FrontIcon height="64px" width="64px"/>
@@ -28,7 +39,7 @@ import ChevronIcon from '@/components/icons/ChevronIcon.vue';
 
   </div>
 
-  <div class="wrap">
+  <div class="wrap" @click="openDrawer">
 
     <div class="over">
       <BackIcon height="64px" width="64px"/>
@@ -49,7 +60,7 @@ import ChevronIcon from '@/components/icons/ChevronIcon.vue';
 
   </div>
 
-  <div class="wrap">
+  <div class="wrap" @click="openDrawer">
 
     <div class="over">
       <CloudIcon height="64px" width="64px"/>
@@ -91,9 +102,11 @@ import ChevronIcon from '@/components/icons/ChevronIcon.vue';
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 8px;
   }
 
   .over {
+    border-radius: 8px;
     padding: 8px;
     background-color: var(--color-text);
     transition: all 200ms ease-in-out;
@@ -122,6 +135,8 @@ import ChevronIcon from '@/components/icons/ChevronIcon.vue';
     display: flex;
     flex-direction: column;
     justify-content: end;
+
+    border-radius: 0 0 8px 8px;
   }
 
   .content {
@@ -138,7 +153,7 @@ import ChevronIcon from '@/components/icons/ChevronIcon.vue';
     text-transform: uppercase;
   }
 
-  .wrap:hover > .over {
+  .show > .over {
     transform: translate(8px, -8px);
     filter: drop-shadow(8px 8px 8px rgba(0, 0, 0, 0.5));
   }
@@ -147,15 +162,15 @@ import ChevronIcon from '@/components/icons/ChevronIcon.vue';
     transition: all 200ms ease-in-out;
   }
 
-  .wrap:hover > .over > span > svg {
+  .show > .over > span > svg {
     rotate: 90deg;
   }
 
-  .wrap:hover ~ .wrap {
+  .show ~ .wrap {
     transform: translateY(90%);
   }
 
-  .wrap:hover > .under {
+  .show > .under {
     transform: translate(8px, 90%);
   }
 
