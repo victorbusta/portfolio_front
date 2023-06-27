@@ -23,7 +23,7 @@ const handleScroll = () => {
 window.addEventListener('scroll', handleScroll);
 
 watch(scrollIndicatorWidth, () => {  
-  anim.translate('#deco', `${scrollIndicatorWidth.value * .5}%`, `${scrollIndicatorWidth.value * .5}%`, 500);
+  anim.translate('#deco', `${scrollIndicatorWidth.value * .5}%`, `${scrollIndicatorWidth.value * .5}%`, 0);
 
   scrollIndicatorStyle.value = `width: ${scrollIndicatorWidth.value}%`;
 });
@@ -122,7 +122,7 @@ onMounted(() => {
 <style scoped>
 
 header {
-  position: sticky;
+  position: fixed;
   top: 0;
   width: 100%;
   height: 48px;
@@ -156,6 +156,7 @@ header > h1 {
 
 section {
   position: relative;
+  top: 48px;
   height: calc(100vh - 48px);
   z-index: 1;
 }

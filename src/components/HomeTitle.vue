@@ -5,12 +5,8 @@ const scrollPosition = ref(0);
 
 watch(scrollPosition, (newValue) => {
   if (newValue > 0) {
-    // Scroll position is not at the top
-    console.log('Scroll position is not at the top');
     document.querySelector('#hovering')?.classList.remove('at-top');
   } else {
-    // Scroll position is at the top
-    console.log('Scroll position is at the top');
     document.querySelector('#hovering')?.classList.add('at-top');
   }
 });
