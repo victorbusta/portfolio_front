@@ -23,7 +23,7 @@ const handleScroll = () => {
 window.addEventListener('scroll', handleScroll);
 
 watch(scrollIndicatorWidth, () => {  
-  anim.translate('#deco', `${scrollIndicatorWidth.value * .5}%`, `${scrollIndicatorWidth.value * .5}%`, 300);
+  anim.translate('#deco', `${scrollIndicatorWidth.value * .5}%`, `${scrollIndicatorWidth.value * .5}%`, 500);
 
   scrollIndicatorStyle.value = `width: ${scrollIndicatorWidth.value}%`;
 });
@@ -148,12 +148,9 @@ header > h1 {
   position: fixed;
   top: 48px;
   left: 0;
-  /* transform: translate(-50vw, -50vh); */
-  /* rotate: -40deg; */
   height: 4px;
   width: 0;
   background-color: var(--color-background-bis);
-  /* transform-origin: 100vh; */
   z-index: 0;
 }
 
