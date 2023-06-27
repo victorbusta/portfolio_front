@@ -6,10 +6,10 @@
     "cypress.config.*",
     "nightwatch.conf.*",
     "playwright.config.*"
-, "../vite.config.ts"  ],
+  ],
   "compilerOptions": {
     "composite": true,
     "module": "ESNext",
-    "types": ["node", "jquery"]
+    "types": ["node"]
   }
 }

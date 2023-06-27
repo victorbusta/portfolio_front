@@ -86,13 +86,17 @@ export function translate(
   translationY: string,
   duration = 150
 ) {
-  document
-    .querySelector(selector)
-    ?.animate([{ transform: `translate(${translationX}, ${translationY})` }], {
+  const element = document.querySelector(selector);
+  if (!element) return;
+
+  requestAnimationFrame(() => {
+    element.animate([{ transform: `translate(${translationX}, ${translationY})` }], {
       duration: duration,
       fill: "forwards",
     });
+  });
 }
+
 
 export function translateEl(
   el: Element,

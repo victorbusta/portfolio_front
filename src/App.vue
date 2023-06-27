@@ -1,14 +1,15 @@
 <script setup lang="ts">
-import { ref, provide, onMounted, watch } from 'vue';
-import LangIcon from '@/components/icons/LangIcon.vue';
-import NavItem from './components/items/NavItem.vue';
-import HomeView from './views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
 import AboutView from './views/AboutView.vue';
-import CodeView from './views/CodeView.vue';
-import * as anim from '@/utils.animation';
+import ProjectView from './views/ProjectView.vue';
+import { onMounted, provide, ref, watch } from 'vue';
+import * as anim from '@/utils.anim';
+
+// scroll indicator handling and paralax
 
 const scrollIndicatorWidth = ref(0);
 const scrollIndicatorStyle = ref('');
+const decoStyle = ref('');
 
 const handleScroll = () => {
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -19,13 +20,15 @@ const handleScroll = () => {
   scrollIndicatorWidth.value = progress;
 };
 
-onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
-});
+window.addEventListener('scroll', handleScroll);
 
-watch(scrollIndicatorWidth, () => {
+watch(scrollIndicatorWidth, () => {  
+  anim.translate('#deco', `${scrollIndicatorWidth.value * .5}%`, `${scrollIndicatorWidth.value * .5}%`, 500);
+
   scrollIndicatorStyle.value = `width: ${scrollIndicatorWidth.value}%`;
 });
+
+// language switching handling
 
 const unactiveLang = ref(window.navigator.language === 'fr-FR' ? 'eng' : 'fr');
 const lang = ref(window.navigator.language !== 'fr-FR' ? 'eng' : 'fr');
@@ -37,23 +40,41 @@ const switchLang = () => {
 
 provide('lang', lang);
 
+// section switching handling
+
 const navItems = [
-  { label: 'VSC .', to: '#home', isActive: ref(false) },
-  { label: 'ABOUT', to: '#about', isActive: ref(false) },
-  { label: 'CODE', to: '#project', isActive: ref(false) }
+  { label: 'VSC .', to: '#home' },
+  { label: 'ABOUT', to: '#about' },
+  { label: 'CODE', to: '#project' }
 ];
+
+let lastActive: string = '';
+
+const isElementAbove = (element1: HTMLElement, element2: HTMLElement) => element1.offsetTop < element2.offsetTop;
 
 const handleSectionIntersection = (entries: IntersectionObserverEntry[]) => {
   entries.forEach(entry => {
     const sectionId = entry.target.id;
     const navItem = navItems.find(item => item.to === `#${sectionId}`);
 
-    if (navItem) {
+    if (navItem) {      
       if (entry.isIntersecting) {
-        navItem.isActive.value = true;
-        // window.history.replaceState({}, '', navItem.to); // Update URL hash without scrolling
-      } else {
-        navItem.isActive.value = false;
+
+        const intersectingElement = document.querySelector(navItem.to) as HTMLElement;
+
+        if (lastActive !== navItem.to) {
+          if (lastActive !== '') {
+            const lastElement = document.querySelector(lastActive) as HTMLElement;
+            
+            anim.translateY(`${lastActive}-title`, isElementAbove(intersectingElement, lastElement) ? '48px' : '-48px');
+            anim.hide(`${lastActive}-title`, true);
+          }
+
+          anim.hide(`${navItem.to}-title`, false);
+          anim.translateY(`${navItem.to}-title`, '0px');
+
+          lastActive = navItem.to;
+        }
       }
     }
   });
@@ -64,242 +85,90 @@ onMounted(() => {
   const options = {
     root: null, // Use the viewport as the root
     rootMargin: "0px",
-    threshold: 0.5 // When at least 50% of the section is visible
+    threshold: .7 // When at least 50% of the section is visible
   };
 
   const observer = new IntersectionObserver(handleSectionIntersection, options);
 
   sections.forEach(section => observer.observe(section));
 });
-
-let navOpen = false;
-
-const toggleNav = () => {
-  if (window.innerWidth <= 425) {
-    anim.translateX('nav', navOpen ? '100%' : '0', 100);
-    navOpen = !navOpen;
-    if (!navOpen) {
-      document.querySelector('#burger')?.classList.remove("opened");
-    } else {
-      document.querySelector('#burger')?.classList.add("opened");
-    }
-  }
-}
-
 </script>
 
 <template>
 
+  <header>
+    <h1 id="home-title">vsc .</h1>
+    <h1 id="about-title">{{ lang === 'fr' ? 'a propos' : 'about' }}</h1>
+    <h1 id="project-title">{{ lang === 'fr' ? 'projets' : 'projects' }}</h1>
+  </header>
+
+  <div id="deco" :style="decoStyle"></div>
+
+  <section id="home">
+    <HomeView/>
+  </section>
+
+  <section id="about">
+    <AboutView/>
+  </section>
+
+  <section id="project">
+    <ProjectView/>
+  </section>
+
   <div class="scroll-indicator" :style="scrollIndicatorStyle"></div>
-
-  <div class="langSwitch" @click="switchLang">
-    <span>
-      <h1 >
-        {{ lang }}
-      </h1>
-      <h1 class="unactive">
-        {{ unactiveLang }}
-      </h1>
-    </span>
-
-    <LangIcon height="56px"/>
-  </div>
-
-  <nav>
-    <NavItem
-        v-for="navItem in navItems"
-        :key="navItem.to"
-        :label="navItem.label"
-        :to="navItem.to"
-        :class="`${navItem.isActive.value ? 'active' : ''}`"
-        @click="toggleNav"
-      />
-  </nav>
-
-  <article>
-    <section id="home">
-      <HomeView/>
-    </section>
-    <section id="about">
-      <AboutView/>
-    </section>
-    <section id="project">
-      <CodeView/>
-    </section>
-  </article>
-
-  <footer>
-    <div id="burger" @click="toggleNav">
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-      Made with Vue3
-  </footer>
-
 </template>
 
 <style scoped>
+
+header {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 48px;
+  background-color: var(--color-heading);
+  display: flex;
+  justify-content: end;
+  z-index: 2;
+}
+
+header > h1 {
+  position: absolute;
+  font-weight: bolder;
+  font-size: 48px;
+  line-height: 48px;
+  text-transform: uppercase;
+  color: var(--color-background);
+  transform: translateY(48px);
+  user-select: none;
+  opacity: 0;
+}
+
 .scroll-indicator {
   position: fixed;
-  top: 0;
+  top: 48px;
   left: 0;
   height: 4px;
   width: 0;
-  background-color: var(--color-background-bis); /* Choose the desired background color */
-  z-index: 2;
-  transform-origin: left;
-}
-
-article {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(-100%);
-  animation: intro 200ms ease-in-out 100ms forwards;
-  scroll-behavior: smooth;
-}
-
-article::-webkit-scrollbar {
-  display: none;
+  background-color: var(--color-background-bis);
+  z-index: 0;
 }
 
 section {
-  grid-column-start: 1;
-  width: 75vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: fit-content;
-}
-
-footer {
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  padding-right: 8px;
-  font-size: 10px;
-  color: var(--color-heading);
+  position: relative;
+  height: calc(100vh - 48px);
   z-index: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: end;
 }
 
-.langSwitch {
+#deco {
   position: fixed;
-  right: 0%;
-  display: flex;
-  z-index: 2;
-}
-
-.langSwitch > span {
-  height: 64px;
-}
-
-.langSwitch > span > h1{
-  color: var(--color-heading);
-  font-size: 24px;
-}
-
-.langSwitch > span > h1:nth-child(n + 2){
-  color: var(--color-text);
-  transform: translateY(-16px);
-  font-size: 24px;
-}
-
-@keyframes intro {
-  100%{
-    transform: translateX(0);
-  }
-}
-
-nav {
-  position: fixed;
-  right: 0px;
-  top: 0px;
+  background-color: var(--color-background-bis);
+  /* transform: translate(50vw, 100vh); */
+  width: 70vw;
   height: 100vh;
-  width: 20vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  z-index: 1;
+  rotate: 45deg;
+  top: 0;
+  left: 50vw;
 }
 
-@keyframes navanim {
-  100%{
-    transform: translateX(0);
-  }
-}
-
-@media (max-width: 425px) {
-
-  .langSwitch {
-    background-color: var(--color-background-bis-soft);
-    padding-left: 8px;
-    border-radius: 0 0 0 8px;
-
-  }
-
-  section {
-    width: 100vw;
-  }
-
-  nav {
-    transform: translateX(100%);
-    background-color: var(--color-background-bis);
-    width: 50vw;
-    align-items: center;
-    
-  }
-
-  #project {
-    margin-bottom: 32px;
-  }
-
-  #burger {
-    height: 48px;
-    width: 48px;
-    background-color: var(--color-background-bis-soft);
-    padding: 4px;
-    margin-bottom: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 8px;
-  }
-
-  #burger > div {
-    position: absolute;
-    height: 4px;
-    width: 40px;
-    background-color: var(--color-text);
-    border-radius: 4px;
-    transition: all 200ms ease-in-out;
-  }
-
-  #burger:not(.opened) > div:first-child {
-    transform: translateY(12px);
-  }
-
-  #burger:not(.opened) > div:last-child {
-    transform: translateY(-12px);
-  }
-
-  .opened > div:first-child {
-    transform: rotate(45deg);
-  }
-
-  .opened > div:last-child {
-    transform: rotate(-45deg);
-  }
-
-  .opened > div:nth-child(2) {
-    opacity: 0;
-  }
-}
 </style>
