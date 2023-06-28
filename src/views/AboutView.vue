@@ -15,9 +15,7 @@ const displayCard = (e: Event) => {
     title?.classList.remove('hidden');
     list?.classList.add('hidden');
   }
-
 }
-
 </script>
 
 <template>
@@ -192,6 +190,9 @@ img {
 }
 
 @media (max-width: 768px) {
+  p {
+    font-size: 1rem;
+  }
 
   img {
     object-fit: cover;
@@ -214,10 +215,6 @@ img {
 }
 
 @media (max-width: 425px) {
-  p {
-    font-size: .8rem;
-  }
-
   #skill-card {
     height: 15vh;
     width: 70vw;

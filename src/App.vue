@@ -1,7 +1,8 @@
 <script setup lang="ts">
+import IconLang from '@/components/icons/IconLang.vue';
 import HomeView from '@/views/HomeView.vue';
-import AboutView from './views/AboutView.vue';
-import ProjectView from './views/ProjectView.vue';
+import AboutView from '@/views/AboutView.vue';
+import ProjectView from '@/views/ProjectView.vue';
 import { onMounted, provide, ref, watch } from 'vue';
 import * as anim from '@/utils.anim';
 
@@ -96,6 +97,14 @@ onMounted(() => {
 
 <template>
 
+  <div id="lang-switch" @click="switchLang">
+    <IconLang/>
+    <span>
+      <h3>{{ lang === 'fr' ? 'eng' : 'fr' }}</h3>
+      <h3>{{ lang === 'fr' ? 'fr' : 'eng' }}</h3>
+    </span>
+  </div>
+
   <header>
     <h1 id="home-title">vsc .</h1>
     <h1 id="about-title">{{ lang === 'fr' ? 'a propos' : 'about' }}</h1>
@@ -120,6 +129,23 @@ onMounted(() => {
 </template>
 
 <style scoped>
+#lang-switch {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  display: flex;
+}
+
+#lang-switch > span > h3 {
+  line-height: 24px;
+  font-weight: bolder;
+  color: var(--color-background);
+}
+
+#lang-switch > span > h3:first-child {
+  color: var(--color-background-bis);
+}
 
 header {
   position: fixed;
