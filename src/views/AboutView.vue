@@ -222,5 +222,9 @@ img {
     height: 15vh;
     width: 70vw;
   }
+
+  #content-list {
+    font-size: .7rem;
+  }
 }
 </style>
