@@ -3,6 +3,21 @@ import { inject, onMounted, ref, watch } from 'vue';
 
 const lang = ref(inject('lang'));
 
+const displayCard = (e: Event) => {
+  const element = e.currentTarget as HTMLElement;
+  const title = element.querySelector('#card-title');
+  const list = element.querySelector('#content-list');  
+
+  if (!title?.classList.contains('hidden')) {
+    title?.classList.add('hidden');
+    list?.classList.remove('hidden');
+  } else {
+    title?.classList.remove('hidden');
+    list?.classList.add('hidden');
+  }
+
+}
+
 </script>
 
 <template>
@@ -19,27 +34,51 @@ const lang = ref(inject('lang'));
     </p>
     <div id="skills">
 
-      <div id="skill-card">
+      <div id="skill-card" @click="displayCard">
         <div id="card-content">
-          <h1>Front-end</h1>
+          <div id="card-title">
+            <h1>Front-end</h1>
+          </div>
+
+          <div id="content-list" class="hidden">
+            <h2>JS / Vue.JS</h2>
+            <h2>HTML5</h2>
+            <h2>CSS / SCSS</h2>
+          </div>
         </div>
         <div id="card-img" >
           <img src="../../public/front_end.jpg" alt="">
         </div>
       </div>
 
-      <div id="skill-card">
+      <div id="skill-card" @click="displayCard">
         <div id="card-content">
-          <h1>Back-end</h1>
+          <div id="card-title">
+            <h1>Back-end</h1>
+          </div>
+
+          <div id="content-list" class="hidden">
+            <h2>PHP / Symfony</h2>
+            <h2>JS / Nest.JS</h2>
+            <h2>C# / .Net</h2>
+          </div>
         </div>
         <div id="card-img" >
           <img src="../../public/back_end.jpg" alt="">
         </div>
       </div>
 
-      <div id="skill-card">
+      <div id="skill-card" @click="displayCard">
         <div id="card-content">
-          <h1>Cloud</h1>
+          <div id="card-title">
+            <h1>Cloud</h1>
+          </div>
+
+          <div id="content-list" class="hidden">
+            <h2>OVH / Azure</h2>
+            <h2>Linux</h2>
+            <h2>SQL</h2>
+          </div>
         </div>
         <div id="card-img" >
           <img src="../../public/cloud.jpg" alt="">
@@ -100,9 +139,8 @@ p > span {
 #skill-card > #card-img{
   width: 200%;
   height: 100%;
-  background-color: black;
   transform: translateX(-50%);
-  /* scale: 10; */
+  transition: all 200ms ease-in-out;
 }
 
 img {
@@ -113,12 +151,22 @@ img {
 
 #card-content {
   position: absolute;
-  color: white;
+  color: var(--vt-c-white);
   width: 100%;
   z-index: 1;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+#card-content:hover ~ #card-img {
+  scale: 1.1;
 }
 
 #skill-card:first-child {
@@ -127,6 +175,20 @@ img {
 
 #skill-card:last-child {
   border-radius: 0 8px 8px 0;
+}
+
+#card-title {
+  position: absolute;
+  transition: all 200ms ease-in-out;
+  text-transform: uppercase;
+}
+
+#content-list {
+  transition: all 200ms ease-in-out;
+}
+
+.hidden {
+  opacity: 0;
 }
 
 @media (max-width: 768px) {
