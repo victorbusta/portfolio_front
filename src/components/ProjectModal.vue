@@ -33,10 +33,10 @@ const closeModalEmit = () => emit('closeModal');
         <li v-for="task in (lang === 'fr' ? tasks.fr : tasks.eng)" :key="task">{{ task }}</li>
       </ul>
       <ul id="modal-links">
-        <li v-for="link in links" :key="link.label">
+        <li id="link" v-for="link in links" :key="link.label">
           <a :href="link.link" target="_blank">
-            <IconLink/>
             <h2>{{ link.label }}</h2>
+            <IconLink/>
           </a>
         </li>
       </ul>
@@ -111,19 +111,34 @@ ul {
   display: flex;
   flex-direction: column;
   align-items: end;
-  margin-right: 8px;
   width: fit-content;
 }
 
-#modal-links > li > a {
-  color: var(--color-background-bis);
+#link {
+  background-color: var(--color-background);
+  border-radius: 8px 0 0 8px;
+  margin: 8px 0;
+  height: 32px;
+  width: 128px;
+}
+
+a {
+  color: var(--color-heading);
   display: flex;
-  width: fit-content;
+  width: 100%;
   align-items: center;
+  justify-content: end;
   text-decoration: underline;
+  height: 32px;
+  padding-right: 8px;
+  border-radius: 8px 0 0 8px;
+}
+
+a > h2 {
+  font-size: 16px;
 }
 
 a:hover {
-  background: var(--color-hover);
+  background-color: var(--color-hover);
 }
 </style>

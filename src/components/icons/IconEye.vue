@@ -16,7 +16,7 @@
     transform-origin: center;
   }
 
-  #caroussel-item:hover > svg > #center {
+  #item-wrapper:hover > #item-content > svg > #center {
     animation: rotate-eye 400ms ease-in-out forwards;
   }
 

@@ -58,7 +58,7 @@ const closeModal = () => {
           }"
           :tasks="{
             fr: [
-              'Création d’un site de vente de photo',
+              'Création d’un site de vente de photos',
               'Conception et réalisation du front-end',
               'Conception et réalisation d\'une API REST avec OpenApi',
             ],
@@ -100,7 +100,7 @@ const closeModal = () => {
           :tasks="
           {
             fr:           [
-              'Création d’un forum sur la synthèse analogique musical',
+              'Création d’un forum sur la synthèse analogique musicale',
               'Conception d\'une API Rest avec OpenAPI',
               'Conception du front-end'
             ],
@@ -111,7 +111,7 @@ const closeModal = () => {
             ]
           }"
           :links="[
-            { label: 'Front-end', link: 'https://muzikaloid.onrender.com/' },
+            // { label: 'Front-end', link: 'https://muzikaloid.onrender.com/' },
           ]"
         />
       </div>
@@ -219,7 +219,8 @@ img {
   position: relative;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);  border-radius: 0 0 8px 8px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 0 0 8px 8px;
   z-index: 1;
   border-radius: 8px;
   display: flex;
