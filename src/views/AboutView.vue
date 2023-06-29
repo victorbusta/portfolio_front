@@ -45,7 +45,7 @@ const displayCard = (e: Event) => {
           </div>
         </div>
         <div id="card-img" >
-          <img src="../../public/front_end.jpg" alt="">
+          <img src="/front_end.jpg" alt="">
         </div>
       </div>
 
@@ -62,7 +62,7 @@ const displayCard = (e: Event) => {
           </div>
         </div>
         <div id="card-img" >
-          <img src="../../public/back_end.jpg" alt="">
+          <img src="/back_end.jpg" alt="">
         </div>
       </div>
 
@@ -79,7 +79,7 @@ const displayCard = (e: Event) => {
           </div>
         </div>
         <div id="card-img" >
-          <img src="../../public/cloud.jpg" alt="">
+          <img src="/cloud.jpg" alt="">
         </div>
       </div>
 

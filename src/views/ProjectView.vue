@@ -37,7 +37,7 @@ const closeModal = () => {
       <div id="caroussel-item">
         <div id="item-wrapper">
           <div id="item-img">
-            <img src="../../public/vanbutsele_web.png" alt="">
+            <img src="/vanbutsele_web.png" alt="">
           </div>
           <div id="item-content" @click="openModal">
             <IconEye/>
@@ -78,7 +78,7 @@ const closeModal = () => {
       <div id="caroussel-item">
         <div id="item-wrapper">
           <div id="item-img">
-            <img src="../../public/muzikaloid_web.png" alt="">
+            <img src="/muzikaloid_web.png" alt="">
           </div>
           <div id="item-content" @click="openModal" @closeModal="closeModal">
             <IconEye/>
@@ -119,7 +119,7 @@ const closeModal = () => {
       <div id="caroussel-item">
         <div id="item-wrapper">
           <div id="item-img">
-            <img src="../../public/visiteonline.png" alt="">
+            <img src="/visiteonline.png" alt="">
           </div>
           <div id="item-content" @click="openModal" @closeModal="closeModal">
             <IconEye/>
