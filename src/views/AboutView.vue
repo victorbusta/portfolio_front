@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, onMounted, ref, watch } from 'vue';
+import { inject, ref } from 'vue';
 
 const lang = ref(inject('lang'));
 
@@ -22,7 +22,7 @@ const displayCard = (e: Event) => {
   <main>
     <p v-if="lang === 'fr'">
       Bonjour !<br>
-      Je m'appelle <span>Victor Santos</span>, un développeur passionné résidant à Paris.<br>
+      Je m'appelle <span>Victor Santos</span>, je suis un développeur passionné résidant à Paris.<br>
       En quête de perfection, je cherche toujours à améliorer et partager mes compétences.
     </p>
     <p v-else>

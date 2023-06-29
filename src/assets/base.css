@@ -18,7 +18,8 @@
 
   --color-heading: var(--vt-c-black-bis);
   --color-text: var(--vt-c-black);
-  --color-hover: var(--vt-c-black-soft);
+  --color-hover: var(--vt-c-white-soft);
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -29,7 +30,8 @@
 
     --color-heading: var(--vt-c-white);
     --color-text: var(--vt-c-white-bis);
-    --color-hover: var(--vt-c-white-soft);
+    --color-hover: var(--vt-c-black-soft);
+
   }
 }
 
