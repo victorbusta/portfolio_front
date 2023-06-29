@@ -105,9 +105,9 @@ const closeModal = () => {
               'Conception du front-end'
             ],
             eng: [
-              'Création d’un forum sur la synthèse analogique musical',
-              'Conception d\'une API Rest avec OpenAPI',
-              'Conception du front-end'
+              'Creation of a forum on musical analog synthesis',
+              'Design of a Rest API with OpenAPI',
+              'Design of the front-end'
             ]
           }"
           :links="[
@@ -146,9 +146,9 @@ const closeModal = () => {
               'Re factorisation et ajout de fonctionnalité sur un service d’import de données'
             ],
             eng: [
-              'Création d’un outil de web-scraping',
-              'Création d\'une API Rest avec OpenAPI',
-              'Re factorisation et ajout de fonctionnalité sur un service d’import de données'
+              'Creation of a web-scraping tool',
+              'Creation of a Rest API with OpenAPI',
+              'Refactoring and adding of new functionality to a data import service'
             ]
           }"
           :links="[]"
