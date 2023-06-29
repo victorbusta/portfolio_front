@@ -282,7 +282,6 @@ img {
   #caroussel > div {
     width: 80vw;
     height: 25vh;
-    background-color: black;
   }
 }
 </style>
