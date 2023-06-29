@@ -10,5 +10,6 @@ svg {
   height: 48px;
   width: 48px;
   margin-right: 8px;
+  cursor: pointer;
 }
 </style>

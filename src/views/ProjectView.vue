@@ -186,6 +186,7 @@ main {
   height: 100%;
   width: 100%;
   transition: transform 200ms ease-in-out;
+  cursor: pointer;
 }
 
 .active-item {

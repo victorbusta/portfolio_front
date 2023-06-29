@@ -135,6 +135,7 @@ onMounted(() => {
   left: 0;
   z-index: 3;
   display: flex;
+  cursor: pointer;
 }
 
 #lang-switch > span > h3 {
