@@ -103,7 +103,7 @@ const closeModalEmit = () => emit('closeModal');
 ul {
   color: var(--color-background-bis);
   font-size: 16px;
-  width: 50%;
+  width: 60%;
 }
 
 #modal-links{

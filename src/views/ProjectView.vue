@@ -277,9 +277,6 @@ img {
     height: 25%;
   }
 
-  #item-title > h2 {
-  }
-
   #caroussel > div {
     width: 80vw;
     height: 25vh;
